@@ -2,7 +2,7 @@
 Description=PacketChess for LinBPQ
 
 [Socket]
-ListenStream=6001
+ListenStream=6002
 Accept=yes
 
 [Install]

@@ -2,7 +2,7 @@
 Description=PacketChess Server
 
 [Service]
-ExecStart=/home/bpquser/packetchess.py
+ExecStart=/opt/venv/bin/python /home/bpquser/packetchess.py
 StandardInput=socket
 StandardOutput=socket
 User=bpquser

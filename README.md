@@ -8,8 +8,8 @@ Packet Chess for Packet Radio.  It's made to work with the [BPQ32 Packet Switch 
 Packet Chess when running on your packet system will look like this:
 ```
 *** Connected to Chess        
--=- Games -=-
-
+--Packet Chess--
+Game ID: 1, Callsign: M7TAW, FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1, NextMove: b, LastMove: 2025-12-03 19:19:32.347100
 
 ```
 
@@ -17,6 +17,14 @@ Packet Chess when running on your packet system will look like this:
 Download and install PacketChess to your system:
 ```
 git clone https://github.com/airqualityanthony/PacketChess.git
+```
+
+Create a venv in /opt/ to install the python-chess application 
+
+```
+python3 -m venv /opt/
+source /opt/venv/bin/python /opt/venv/bin/pip install python-chess
+
 ```
 
 Configure BPQ to connect to external application ports[^1]:
@@ -39,7 +47,8 @@ APPLICATION 3,CHAT,,N0CALL-11,CALCHT,255
 ; External Applications
 APPLICATION 5,CHESS,C 15 HOST 1 S,N0CAL-5,CALCHESS,255
 ```
-Note: CMDPORT= ports are zero indexed, such that "C 15 HOST 1 S" will connect to port 15 (Telnet) in the example config, and then connect to local host on command port 1 which is the second port 6001 in the CMDPORT= list.
+Note: CMDPORT= ports are zero indexed, such that "C 15 HOST 1 S" will connect to port 15 (Telnet) in the example config, and then connect to local host on command port 1 which is the second port 6001 in the CMDPORT= list. Choose a CMDPORT that isn't already in use by another Application i.e 2 (6002), 3(6003), etc.
+
 **The "S" in the connect string tells BPQ to return the user to the node when they exit packetchess.**
 
 ## inetd server
@@ -49,7 +58,7 @@ service packetchess
 {
 	disable		= no
 	protocol	= tcp
-	port		= 6001
+	port		= 6002
 	server		= /home/bpquser/packetchess.py
 	user		= bpquser
 	socket_type	= stream
