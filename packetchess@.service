@@ -1,0 +1,11 @@
+[Unit]
+Description=PacketChess Server
+
+[Service]
+ExecStart=/home/bpquser/packetchess.py
+StandardInput=socket
+StandardOutput=socket
+User=bpquser
+
+[Install]
+WantedBy=multi-user.target
