@@ -14,7 +14,6 @@ Version: 1.0
 Changelog:
 * Init
 """
-
 import sys
 import os
 import sqlite3
@@ -54,4 +53,23 @@ max_message_length = config['games'].getint('maxlen')
 start_index = 0
 
 while True:
-    pass
+    ## print the current page of games
+    c.execute('SELECT id, callsign, fen, timestamp FROM games ORDER BY timestamp DESC LIMIT ? OFFSET ?', (num_entries, start_index))
+    games = c.fetchall()
+    if not games:
+        print("No more games.")
+        break
+    for game in games:
+        print(f"Game ID: {game[0]} | Player: {game[1]} | FEN: {game[2]} | Time: {game[3]}")
+    print("\nCommands: [n]ext page, [p]revious page, E[x]it")
+    command = input("Enter command: ").strip().upper()
+    if command == 'n':
+        start_index += num_entries
+    elif command == 'p':
+        start_index = max(0, start_index - num_entries)
+    elif command == 'x':
+        conn.close()
+        print(config['chess']['exitmsg'])
+        break
+    else:
+        print("Invalid command.")
