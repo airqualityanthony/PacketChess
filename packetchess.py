@@ -1,4 +1,4 @@
-#!/opt/venv/bin/python
+# !/opt/venv/bin/python
 # -*- coding: utf-8 -*-
 
 """
@@ -14,7 +14,7 @@ Version: 1.0
 Changelog:
 * Init
 """
-print("running script")
+# print("running script")
 import sys
 import os
 import sqlite3
@@ -22,7 +22,7 @@ import datetime
 import configparser
 import chess  # python-chess library for chess logic
 
-print("imports complete, getting paths")
+# print("imports complete, getting paths")
 # get the directory path of the running script
 script_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -30,7 +30,7 @@ script_path = os.path.dirname(os.path.abspath(__file__))
 config_file_path = os.path.join(script_path, 'packetchess.ini')
 db_file_path = os.path.join(script_path, 'packetchess.db')
 
-print("loading config and connecting to database")
+# print("loading config and connecting to database")
 # load config file
 config = configparser.ConfigParser()
 config.read(config_file_path)
@@ -48,11 +48,11 @@ c.execute('''CREATE TABLE IF NOT EXISTS games
               timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
 
 # get the user's callsign
-# callsign = input().strip()
-callsign = "M7TAW"
+callsign = input().strip()
+# callsign = "M7TAW"
 print(config['chess']['banner'])
 
-# show the latest entries on the wall
+# show the list of games with pagination
 num_entries = config['games'].getint('perpage')
 max_message_length = config['games'].getint('maxlen')
 
